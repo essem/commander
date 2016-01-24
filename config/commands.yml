@@ -1,0 +1,14 @@
+- name: status
+  command: git status
+- name: log
+  command: git log -10
+- name: gitk
+  command: git log --oneline --decorate --graph --all
+- name: search
+  command: git log -p -S {{keyword}}
+- name: commit
+  command: git commit -a -m "{{message}}"
+- name: ls twice
+  command: |
+    ls -lh
+    ls -la

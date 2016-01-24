@@ -1,3 +1,20 @@
-.app {
-  padding: 40px 20px;
+.topBar {
+  width: 100%;
+  padding-top: 20px;
+  background-color: #eef;
+}
+
+.topBarFixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.row {
+  margin-bottom: 15px;
+}
+
+.output {
+  padding-top: 15px;
 }

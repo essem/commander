@@ -1,8 +1,10 @@
-# electron-react-boilerplate
+# Commander
 
-A boilerplate for building a React-Electron app.
-Converted from  [webpack-express-boilerplate](
-https://github.com/christianalfoni/webpack-express-boilerplate)
+Electron app to run predefined commands
+
+## Screenshot
+
+![screenshot](/docs/screenshot.png?raw=true)
 
 ## Run
 
