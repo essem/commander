@@ -1,6 +1,7 @@
+/* eslint strict: 0, no-console: 0 */
 'use strict';
 
-let startUrl = 'file://' + __dirname + '/dist/index.html';
+let startUrl = `file://${__dirname}/dist/index.html`;
 const isDeveloping = process.env.NODE_ENV !== 'production';
 
 if (isDeveloping) {
@@ -22,31 +23,35 @@ if (isDeveloping) {
       timings: true,
       chunks: false,
       chunkModules: false,
-      modules: false
-    }
+      modules: false,
+    },
   });
 
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
-  app.get('*', function response(req, res) {
+  app.get('*', (req, res) => {
     res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')));
     res.end();
   });
 
   const port = 9865;
   startUrl = `http://127.0.0.1:${port}`;
-  app.listen(port, '0.0.0.0', function onStart(err) {
+  app.listen(port, '0.0.0.0', err => {
     if (err) {
       console.log(err);
     }
+
     console.info('==> 🌎 Listening on port %s. Open up %s in your browser.', port, startUrl);
   });
 }
-console.log('Starting URL: ' + startUrl);
+
+console.log(`Starting URL: ${startUrl}`);
 
 const electron = require('electron');
+
 // Module to control application life.
 const app = electron.app;
+
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 
@@ -56,7 +61,7 @@ let mainWindow;
 
 function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600});
+  mainWindow = new BrowserWindow({ width: 800, height: 600 });
 
   // and load the index.html of the app.
   mainWindow.loadURL(startUrl);
@@ -67,7 +72,7 @@ function createWindow() {
   }
 
   // Emitted when the window is closed.
-  mainWindow.on('closed', function() {
+  mainWindow.on('closed', () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
@@ -80,7 +85,7 @@ function createWindow() {
 app.on('ready', createWindow);
 
 // Quit when all windows are closed.
-app.on('window-all-closed', function() {
+app.on('window-all-closed', () => {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
@@ -88,7 +93,7 @@ app.on('window-all-closed', function() {
   }
 });
 
-app.on('activate', function() {
+app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {

@@ -13,10 +13,10 @@ export default class App extends React.Component {
     const commands = yaml.load(fs.readFileSync('config/commands.yml', 'utf8'));
     this.state = {
       state: 'idle',
-      commands: commands,
+      commands,
       editor: '',
       output: '',
-      exitCode: 0
+      exitCode: 0,
     };
 
     this.handleCommand = this.handleCommand.bind(this);
@@ -37,7 +37,7 @@ export default class App extends React.Component {
   }
 
   run(command) {
-    this.setState({state: 'run', output: ''});
+    this.setState({ state: 'run', output: '' });
 
     if (!fs.existsSync('tmp')) {
       fs.mkdirSync('tmp');
@@ -49,19 +49,19 @@ export default class App extends React.Component {
     const child = childProcess.spawn('tmp/command.sh');
 
     child.stdout.on('data', (data) => {
-      this.setState({output: this.state.output + data}, () => {
+      this.setState({ output: this.state.output + data }, () => {
         document.body.scrollTop = document.body.scrollHeight;
       });
     });
 
     child.stderr.on('data', (data) => {
-      this.setState({output: this.state.output + data}, () => {
+      this.setState({ output: this.state.output + data }, () => {
         document.body.scrollTop = document.body.scrollHeight;
       });
     });
 
     child.on('close', (code) => {
-      this.setState({state: 'idle', exitCode: code});
+      this.setState({ state: 'idle', exitCode: code });
     });
   }
 
@@ -78,19 +78,20 @@ export default class App extends React.Component {
       } else {
         end = command.length;
       }
+
       const textarea = this.refs.textarea.getInputDOMNode();
-      this.setState({editor: command}, () => {
+      this.setState({ editor: command }, () => {
         textarea.setSelectionRange(start, end);
         textarea.focus();
       });
     } else {
-      this.setState({editor: command});
+      this.setState({ editor: command });
       this.run(command);
     }
   }
 
   handleEditor(e) {
-    this.setState({editor: e.target.value});
+    this.setState({ editor: e.target.value });
   }
 
   handleRun() {
@@ -105,18 +106,19 @@ export default class App extends React.Component {
       <Row className={styles.row}>
         <Col md={12}>
           <ButtonToolbar>
-            {this.state.commands.map((command, i) => {
-              return (
+            {this.state.commands.map((command, i) =>
+              (
                 <Button
                   key={i}
                   bsStyle="primary"
                   data-index={i}
                   disabled={this.state.state !== 'idle'}
-                  onClick={this.handleCommand}>
+                  onClick={this.handleCommand}
+                >
                   {command.name}
                 </Button>
-              );
-            })}
+              )
+            )}
           </ButtonToolbar>
         </Col>
       </Row>
@@ -128,14 +130,16 @@ export default class App extends React.Component {
             value={this.state.editor}
             ref="textarea"
             disabled={this.state.state !== 'idle'}
-            onChange={this.handleEditor} />
+            onChange={this.handleEditor}
+          />
         </Col>
 
         <Col md={12}>
           <Button
             bsStyle="primary"
             disabled={this.state.state !== 'idle'}
-            onClick={this.handleRun}>
+            onClick={this.handleRun}
+          >
             Run
           </Button>
         </Col>
